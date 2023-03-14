@@ -1,3 +1,5 @@
+let phoneName = "apple";
+
 const loadPhones = async (searchText, dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     const res = await fetch(url);
@@ -8,14 +10,15 @@ const loadPhones = async (searchText, dataLimit) => {
 const displayPhones = (phones, dataLimit) => {
     const phonesContainer = document.getElementById("phones-container");
     phonesContainer.innerHTML = "";
-    // phonesContainer.textContent = '';
+
     // display 10 phones only
     const showAll = document.getElementById("show-all");
+
     if (dataLimit && phones.length > 10) {
-        phones = phones.slice(0, 10);
+        phones = phones.slice(0, dataLimit);
         showAll.classList.remove("d-none");
     } else {
-        showAll.classList.add("d-hidden");
+        showAll.classList.add("d-none");
     }
 
     // display no phones found
@@ -25,6 +28,7 @@ const displayPhones = (phones, dataLimit) => {
     } else {
         noPhone.classList.add("d-none");
     }
+
     // display all phones
     phones.forEach((phone) => {
         const phoneDiv = document.createElement("div");
@@ -46,6 +50,7 @@ const displayPhones = (phones, dataLimit) => {
         `;
         phonesContainer.appendChild(phoneDiv);
     });
+
     // stop spinner or loader
     toggleSpinner(false);
 };
@@ -53,16 +58,20 @@ const displayPhones = (phones, dataLimit) => {
 // Processing Search Results
 const processSearch = (dataLimit) => {
     toggleSpinner(true);
-    let searchField = document.getElementById("search-field");
-    const searchText = searchField.value;
-    searchField.value = "";
-    loadPhones(searchText, dataLimit);
+
+    if (dataLimit !== undefined) {
+        let searchField = document.getElementById("search-field");
+        phoneName = searchField.value;
+        searchField.value = "";
+    }
+
+    loadPhones(phoneName, dataLimit);
 };
 
 // handle search button click
 document.getElementById("btn-search").addEventListener("click", function () {
     // start loader
-    processSearch(10);
+    processSearch(5);
 });
 
 // search input field enter key handler
@@ -70,7 +79,7 @@ document
     .getElementById("search-field")
     .addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-            processSearch(10);
+            processSearch(5);
         }
     });
 
@@ -115,4 +124,4 @@ const displayPhoneDetails = (phone) => {
     `;
 };
 
-loadPhones("apple");
+loadPhones(phoneName, 10);
