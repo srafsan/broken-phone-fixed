@@ -14,7 +14,7 @@ const displayPhones = (phones, dataLimit) => {
     // display 10 phones only
     const showAll = document.getElementById("show-all");
 
-    if (dataLimit && phones.length > 10) {
+    if (dataLimit && phones.length > 9) {
         phones = phones.slice(0, dataLimit);
         showAll.classList.remove("d-none");
     } else {
@@ -71,7 +71,7 @@ const processSearch = (dataLimit) => {
 // handle search button click
 document.getElementById("btn-search").addEventListener("click", function () {
     // start loader
-    processSearch(5);
+    processSearch(9);
 });
 
 // search input field enter key handler
@@ -79,7 +79,7 @@ document
     .getElementById("search-field")
     .addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-            processSearch(5);
+            processSearch(9);
         }
     });
 
@@ -105,14 +105,14 @@ const loadPhoneDetails = async (id) => {
 };
 
 const displayPhoneDetails = (phone) => {
-    console.log(phone);
     const modalTitle = document.getElementById("phoneDetailModalLabel");
-    modalTitle.innerText = phone.name;
+    modalTitle.textContent = phone.name;
+
     const phoneDetails = document.getElementById("phone-details");
-    console.log(phone.mainFeatures.sensors[0]);
+    phoneDetails.innerHTML = "";
     phoneDetails.innerHTML = `
         <p>Release Date: ${phone.releaseDate}</p>
-        <p>Storage: ${phone.mainFeatures}</p>
+        <p>Storage: ${phone.mainFeatures.storage}</p>
         <p>Others: ${
             phone.others ? phone.others.Bluetooth : "No Bluetooth Information"
         }</p>
@@ -124,4 +124,4 @@ const displayPhoneDetails = (phone) => {
     `;
 };
 
-loadPhones(phoneName, 10);
+loadPhones(phoneName, 9);
