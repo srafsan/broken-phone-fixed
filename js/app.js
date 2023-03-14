@@ -53,8 +53,9 @@ const displayPhones = (phones, dataLimit) => {
 // Processing Search Results
 const processSearch = (dataLimit) => {
     toggleSpinner(true);
-    const searchField = document.getElementById("search-field");
+    let searchField = document.getElementById("search-field");
     const searchText = searchField.value;
+    searchField.value = "";
     loadPhones(searchText, dataLimit);
 };
 
