@@ -1,14 +1,13 @@
 const loadPhones = async (searchText, dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-    console.log(url);
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data);
     displayPhones(data.data, dataLimit);
 };
 
 const displayPhones = (phones, dataLimit) => {
     const phonesContainer = document.getElementById("phones-container");
+    phonesContainer.innerHTML = "";
     // phonesContainer.textContent = '';
     // display 10 phones only
     const showAll = document.getElementById("show-all");
@@ -68,7 +67,7 @@ document.getElementById("btn-search").addEventListener("click", function () {
 document
     .getElementById("search-field")
     .addEventListener("keypress", function (e) {
-        if (e.key === "enter") {
+        if (e.key === "Enter") {
             processSearch(10);
         }
     });
