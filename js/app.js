@@ -109,10 +109,12 @@ const displayPhoneDetails = (phone) => {
     modalTitle.textContent = phone.name;
 
     const phoneDetails = document.getElementById("phone-details");
+    const storageInfo = phone.mainFeatures.storage.split(",");
+
     phoneDetails.innerHTML = "";
     phoneDetails.innerHTML = `
         <p>Release Date: ${phone.releaseDate}</p>
-        <p>Storage: ${phone.mainFeatures.storage}</p>
+        <p>Storage: ${storageInfo[0]}</p>
         <p>Others: ${
             phone.others ? phone.others.Bluetooth : "No Bluetooth Information"
         }</p>
